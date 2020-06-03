@@ -1,26 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import { useSocket } from './hooks/useSocket'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+  const socket = useSocket('http://127.0.0.1:5000')
+  useEffect(() => {
+    const handleEvent = (payload) => {
+      console.log(payload)
+    }
+    if (socket) {
+      socket.on('message', handleEvent)
+    }
+  }, [socket])
+
+  return <div>This works</div>
 }
 
-export default App;
+export default App
